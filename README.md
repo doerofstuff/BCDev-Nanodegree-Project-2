@@ -13,10 +13,12 @@ To setup the project for review do the following:
 
 The file __createTen.js__ in the root directory will create 10 blocks,as well as genesis block if the chain doesn't exist. From there, you can run the other files prepended with 'this_' in order to test that the chain functionality is correct. Make sure to note that if the 'test_tamperedBlock.js' file is run before validateChain test, then validateChain should call errors, while it should not before hand:
 
-* after installation run:
+* after installation run the createTen.js file as seen below:
 ```
 node createTen.js
 ```
+
+In your terminal you will see blocks as they are added, and once the 10th is added, it will close. From here, you can begin to run the test files.
 
 * To test height functionality
 ```
