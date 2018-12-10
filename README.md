@@ -16,14 +16,32 @@ The file __createTen.js__ in the root directory will create 10 blocks,as well as
 * after installation run:
 ```
 node createTen.js
+```
+
+* To test height functionality
+```
 node test_height.js
+```
+
+* To test getBlock functionality
+```
 node test_getBlock.js
-node test_validateChain.js
-node test_tamperedBlock.js
+```
+
+* To test chain validation functionality run below (it should validdate if ran before the tampered block test and fail afterward)
+```
 node test_validateChain.js
 ```
 
-This function validates the whole chain and return a list of errors found during the validation.
+* To test tampered block, first run the tampered Block file:
+```
+node test_tamperedBlock.js
+```
+
+* Then run the validate chain file again, this time around it should fail
+```
+node test_validateChain.js
+```
 
 ## What do I learned with this Project
 
