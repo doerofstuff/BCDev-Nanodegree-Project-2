@@ -55,7 +55,21 @@ class LevelSandbox {
         });
     }
 
-    
+    blockHeight(){
+        let self = this;
+        return new Promise(async function(resolve, reject){
+            // Add your code here, remember un Promises you need to resolve() or reject()
+            let count = 0;
+            self.db.createReadStream().on('data', function(data) {
+                count++
+            }).on('error', function(err) {
+                console.log('Unable to read data stream!', err)
+            }).on('close', function() {
+                resolve(count - 1)
+            });
+
+        });
+    }
 
     blockArray(block) {
         let self = this;

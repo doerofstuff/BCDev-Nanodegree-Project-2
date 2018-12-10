@@ -7,9 +7,9 @@ const Block = require('./Block.js');
 
 let myBlockChain = new BlockChain.Blockchain();
 
-myBlockChain.getBlockHeight().then((height) => {
+myBlockChain.bd.blockArray().then(chain => {
 
 	console.log('TESTING GET BLOCK HEIGHT');
-	console.log('Height = ' + height)
+	console.log(chain)
 	console.log('------------------------------');
 }).catch((err) => { console.log(err);});

@@ -11,13 +11,13 @@ class Blockchain {
     }
 
     async getCurrentBlock(){
-        let height = await this.getBlockHeight();
+        let count = await this.getCount();
         let currentBlock;
-        if(height === 0){
+        if(count === 0){
             let genBlock = this.generateGenesisBlock();
             currentBlock = await this.bd.addData(0,genBlock);
         } else {
-            currentBlock = await this.getBlock(height - 1)
+            currentBlock = await this.getBlock(count - 1)
         }
         return currentBlock;
     }
@@ -28,9 +28,14 @@ class Blockchain {
         return genBlock;
     }
 
+    async getCount() {
+        let count =  await this.bd.getBlocksCount();
+        return count;
+    }
+
     async getBlockHeight() {
-        let h =  await this.bd.getBlocksCount();
-        return h;
+        let height =  await this.bd.blockHeight();
+        return height;
     }
 
     async addBlock(newBlock) {
@@ -50,26 +55,33 @@ class Blockchain {
     async validateChain(){
         console.log('VALIDATING CHAIN')
         let errorLog = [];
-        let blockCount = await this.getBlockHeight()
-        for (var i = 0; i < blockCount - 1; i++) {
+        let blockHeight = await this.getBlockHeight()
+        for (var i = 0; i <= blockHeight; i++) {
             
             let block = await this.getBlock(i);
             let blockHash = block.hash
-            let nextBlock = await this.getBlock(i + 1)
-            let nextBlocksPrevHash = nextBlock.previousBlockHash
-            // console.log('BLOCK #' + i);
-            //console.log(block);
             let validateBlock = this.validateBlockWithBlock(block,block.hash);
             if(validateBlock == false){
                 errorLog.push(i)
-            }
-           // console.log('COMPARE NEXT BLOCKS PREVIOUS HASH');
-           // console.log(nextBlocksPrevHash);
-            if (blockHash!==nextBlocksPrevHash) {
-                errorLog.push(i);
             } else {
-                // console.log('VALIDATED HASH LINK');
+                console.log('HASH IS VALID for BLOCK #' + i);
             }
+
+            if(i < blockHeight){
+                let nextBlock = await this.getBlock(i + 1)
+                let nextBlocksPrevHash = nextBlock.previousBlockHash
+            // console.log('COMPARE NEXT BLOCKS PREVIOUS HASH');
+            // console.log(nextBlocksPrevHash);
+                if (blockHash!==nextBlocksPrevHash) {
+                    errorLog.push(i);
+                }  else {
+                    console.log('BLOCK #' + i + ' Hash matches the previousBlockhash of BLOCK #' + (i +1))
+                }
+            } else {
+                console.log('Current Block Cannot yet be validated by way of the next blocks prevhash')
+            }
+        console.log('VALIDATED CHAIN');
+            
         }
 
         if (errorLog.length>0) {
