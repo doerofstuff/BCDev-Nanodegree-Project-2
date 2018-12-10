@@ -1,61 +1,32 @@
-# Blockchain Data
+# Project #2. Private Blockchain
 
-Blockchain has the potential to change the way that the world approaches data. Develop Blockchain skills by understanding the data model behind Blockchain by developing your own simplified private blockchain.
+This is Project 2, Private Blockchain, in this project I created the classes to manage my private blockchain, to be able to persist my blochchain I used LevelDB.
 
-## Getting Started
+## Setup project for Review.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+To setup the project for review do the following:
+1. Download the project.
+2. Run command __npm install__ to install the project dependencies.
+3. Run command __node createTen.js__ in the root directory.
 
-### Prerequisites
+## Testing the project
 
-Installing Node and NPM is pretty straightforward using the installer package available from the (Node.js® web site)[https://nodejs.org/en/].
+The file __createTen.js__ in the root directory will create 10 blocks,as well as genesis block if the chain doesn't exist. From there, you can run the other files prepended with 'this_' in order to test that the chain functionality is correct. Make sure to note that if the 'test_tamperedBlock.js' file is run before validateChain test, then validateChain should call errors, while it should not before hand:
 
-### Configuring your project
-
-- Use NPM to initialize your project and create package.json to store project dependencies.
+* after installation run:
 ```
-npm init
-```
-- Install crypto-js with --save flag to save dependency to our package.json file
-```
-npm install crypto-js --save
-```
-- Install level with --save flag
-```
-npm install level --save
+node createTen.js
+node test_height.js
+node test_getBlock.js
+node test_validateChain.js
+node test_tamperedBlock.js
+node test_validateChain.js
 ```
 
-## Testing
+This function validates the whole chain and return a list of errors found during the validation.
 
-To test code:
-1: Open a command prompt or shell terminal after install node.js.
-2: Enter a node session, also known as REPL (Read-Evaluate-Print-Loop).
-```
-node
-```
-3: Copy and paste your code into your node session
-4: Instantiate blockchain with blockchain variable
-```
-let blockchain = new Blockchain();
-```
-5: Generate 10 blocks using a for loop
-```
-for (var i = 0; i <= 10; i++) {
-  blockchain.addBlock(new Block("test data "+i));
-}
-```
-6: Validate blockchain
-```
-blockchain.validateChain();
-```
-7: Induce errors by changing block data
-```
-let inducedErrorBlocks = [2,4,7];
-for (var i = 0; i < inducedErrorBlocks.length; i++) {
-  blockchain.chain[inducedErrorBlocks[i]].data='induced chain error';
-}
-```
-8: Validate blockchain. The chain should now fail with blocks 2,4, and 7.
-```
-blockchain.validateChain();
-```
+## What do I learned with this Project
+
+* I was able to identify the basic data model for a Blockchain application.
+* I was able to use LevelDB to persist the Blockchain data.
+* I was able to write algorithms for basic operations in the Blockchain.
